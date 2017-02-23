@@ -44,8 +44,8 @@ class CalendarTest extends PHPUnit_Framework_TestCase
         $calendar = new Calendar('2017-02-2');
         $calendar->build();
         // Assert
-        $this->assertEquals(6, $calendar->weeks[1]->days[0]->number); // Monday 6th, Feb 2016
-        $this->assertEquals(14, $calendar->weeks[2]->days[1]->number); // Tuesday 14th, Feb 2016
+        $this->assertEquals(6, $calendar->weeks[1]->days[0]->number); // Monday 6th, Feb 2017
+        $this->assertEquals(14, $calendar->weeks[2]->days[1]->number); // Tuesday 14th, Feb 2017
     }
     /**
      * Test next and prev month values.
@@ -93,9 +93,9 @@ class CalendarTest extends PHPUnit_Framework_TestCase
         $calendar->dataDateField = 'date';
         $calendar->build();
         // Assert
-        $this->assertEquals(55, $calendar->weeks[1]->days[0]->data[0]['value']); // Monday 6th, Feb 2016
-        $this->assertEquals(101, $calendar->weeks[2]->days[1]->data[0]['value']); // Data Tuesday 14th, Feb 2016
-        $this->assertEmpty($calendar->weeks[1]->days[1]->data); // Tuesday 7th, Feb 2016
+        $this->assertEquals(55, $calendar->weeks[1]->days[0]->data[0]['value']); // Monday 6th, Feb 2017
+        $this->assertEquals(101, $calendar->weeks[2]->days[1]->data[0]['value']); // Data Tuesday 14th, Feb 2017
+        $this->assertEmpty($calendar->weeks[1]->days[1]->data); // Tuesday 7th, Feb 2017
     }
     /**
      * Test data assignment in calendar.
@@ -113,7 +113,31 @@ class CalendarTest extends PHPUnit_Framework_TestCase
         $calendar->dataDateField = 'date';
         $calendar->build();
         // Assert
-        $this->assertEquals(98555, $calendar->weeks[1]->days[0]->data[0]->value); // Monday 6th, Feb 2016
-        $this->assertEmpty($calendar->weeks[1]->days[1]->data); // Tuesday 7th, Feb 2016
+        $this->assertEquals(98555, $calendar->weeks[1]->days[0]->data[0]->value); // Monday 6th, Feb 2017
+        $this->assertEmpty($calendar->weeks[1]->days[1]->data); // Tuesday 7th, Feb 2017
+    }
+    /**
+     * Test filed days of the following month.
+     */
+    public function testFillNextDates()
+    {
+        // Prepare
+        $calendar = new Calendar('2017-02-2');
+        $calendar->build();
+        // Assert
+        $this->assertEmpty($calendar->weeks[4]->days[2]->number); // Wednesday 1st, Mar 2017
+        $this->assertNotEmpty($calendar->weeks[4]->days[1]->number); // Tuesday 28th, Feb 2017
+    }
+    /**
+     * Test filed days of the previous month.
+     */
+    public function testFillPrevDates()
+    {
+        // Prepare
+        $calendar = new Calendar('2017-02-2');
+        $calendar->build();
+        // Assert
+        $this->assertEmpty($calendar->weeks[0]->days[0]->number); // Monday 30th, Jan 2017
+        $this->assertNotEmpty($calendar->weeks[0]->days[2]->number); // Wednesday 1st, Feb 2017
     }
 }
