@@ -15,7 +15,7 @@ use TenQuality\Utility\Calendar\Day;
  * @copyright 10 Quality <http://www.10quality.com>
  * @license MIT
  * @package TenQuality\Utility
- * @version 1.0.0
+ * @version 1.0.1
  */
 class Calendar
 {
@@ -92,6 +92,7 @@ class Calendar
     /**
      * Builds calendar based on date.
      * @since 1.0.0
+     * @since 1.0.1 Force data retrival.
      *
      * @return object this
      */
@@ -108,12 +109,12 @@ class Calendar
                 for ($i = 0; $i < count($this->data); ++$i) {
                     if ((
                             is_array($this->data[$i])
-                            && isset($this->data[$i][$this->dataDateField])
+                            && $this->data[$i][$this->dataDateField]
                             && strtotime($date) === strtotime($this->data[$i][$this->dataDateField])
                         )
                         || (
                             is_object($this->data[$i])
-                            && isset($this->data[$i]->{$this->dataDateField})
+                            && $this->data[$i]->{$this->dataDateField}
                             && strtotime($date) === strtotime($this->data[$i]->{$this->dataDateField})
                         )
                     )
