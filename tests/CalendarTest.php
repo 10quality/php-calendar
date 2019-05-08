@@ -1,6 +1,5 @@
 <?php
 
-use Exception;
 use TenQuality\Utility\Calendar;
 
 /**
